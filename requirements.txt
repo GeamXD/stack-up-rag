@@ -1,0 +1,14 @@
+transformers
+sentence_transformers
+wikipedia
+pypdf
+faiss-cpu
+langchain-together
+openai
+pinecone-client
+langchain
+langchain_community
+langchain-openai
+langchain-pinecone
+tiktoken
+typing_extensions
