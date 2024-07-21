@@ -1,26 +1,37 @@
-[theme]
-# primaryColor = "#945252"
-# backgroundColor = "#1d3b75"
-# secondaryBackgroundColor = "#121c6b"
-# textColor = "#dcc9c9"
-
 # [theme]
-# primaryColor="#945252"
-# backgroundColor="#1d3b75"
-# secondaryBackgroundColor="#121c6b"
-# textColor="#dcc9c9"
+# # primaryColor = "#945252"
+# # backgroundColor = "#1d3b75"
+# # secondaryBackgroundColor = "#121c6b"
+# # textColor = "#dcc9c9"
 
-# primaryColor = "#2a3a6b"
-# backgroundColor = "#121b3a"
-# secondaryBackgroundColor = "#0d1620"
-# textColor = "#e0e0e0"
+# # [theme]
+# # primaryColor="#945252"
+# # backgroundColor="#1d3b75"
+# # secondaryBackgroundColor="#121c6b"
+# # textColor="#dcc9c9"
 
-# primaryColor = "#945252"  # Warm, muted pinkish-brown
-# backgroundColor = "#1d3b75"  # Deep royal blue
-# secondaryBackgroundColor = "#121c6b"  # Very dark blue, almost navy
-# textColor = "#dcc9c9"  # Light, warm beige
+# # primaryColor = "#2a3a6b"
+# # backgroundColor = "#121b3a"
+# # secondaryBackgroundColor = "#0d1620"
+# # textColor = "#e0e0e0"
 
-primaryColor = "#1e3a8a" # Royal Dark Blue
-backgroundColor = "#111827" # Very Dark Gray
-secondaryBackgroundColor = "#1f2937" # Slightly Lighter Dark Gray
-textColor = "#f3f4f6" # Light Gray
+# # primaryColor = "#945252"  # Warm, muted pinkish-brown
+# # backgroundColor = "#1d3b75"  # Deep royal blue
+# # secondaryBackgroundColor = "#121c6b"  # Very dark blue, almost navy
+# # textColor = "#dcc9c9"  # Light, warm beige
+
+# primaryColor = "#1e3a8a" # Royal Dark Blue
+# backgroundColor = "#111827" # Very Dark Gray
+# secondaryBackgroundColor = "#1f2937" # Slightly Lighter Dark Gray
+# textColor = "#f3f4f6" # Light Gray
+
+[theme]
+# primaryColor = "#D8CDC5"  
+# backgroundColor = "#3A2E27"  
+# secondaryBackgroundColor = "#090503"  
+# textColor = "#FAF9F9"  
+
+primaryColor="#ea908d"
+backgroundColor="#721815"
+secondaryBackgroundColor="#010408"
+textColor="#fcf1e0"

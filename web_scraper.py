@@ -4,6 +4,9 @@ import requests
 from bs4 import BeautifulSoup
 
 class WebScraper:
+    """
+    Scrapes the content of a webpage and saves it to a JSON file
+    """
     def __init__(self, base_url: str):
         self.base_url = base_url
         self.data = {

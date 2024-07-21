@@ -1,7 +1,6 @@
 import os
 import json
 import pandas as pd
-import re
 import string
 import pinecone
 from langchain.document_loaders import DataFrameLoader
@@ -13,7 +12,7 @@ from langchain_together import ChatTogether
 
 class RagSetup:
     """A class to set up the RAG model for question-answering."""
-    def __init__(self, data_filepath: str):
+    def __init__(self, data_filepath='data/stack-help_data.json'):
         self.data_filepath = data_filepath
         self.api_key_pinecone = os.getenv("PINECONE_API_KEY")
         self.api_key_together = os.getenv("TOGETHER_API_KEY")
@@ -22,6 +21,18 @@ class RagSetup:
         self.docsearch = None
         self.llm = None
         self.qa_with_sources = None
+        self.data_loaded = False
+        self.store_setup = False
+        self.qa_chain_setup = False
+
+    def _clean_text(self, text: pd.Series) -> pd.Series:
+        """Helper function to clean text data."""
+        text = text.str.replace(r"\/", "", regex=True)
+        text = text.str.translate(str.maketrans('', '', string.punctuation))
+        text = text.str.replace(r"\d+", "", regex=True)
+        text = text.str.replace(r"\s{2,}", " ", regex=True)
+        text = text.str.lower()
+        return text
 
     def wrangle_data(self) -> pd.DataFrame:
         """
@@ -39,18 +50,8 @@ class RagSetup:
         df = pd.DataFrame(doc)
 
         # Clean the data
-        df['article_title_cleaned'] = df['article_title'].str.replace(r"\/", "", regex=True)
-        df['article_title_cleaned'] = df['article_title_cleaned'].str.translate(str.maketrans('', '', string.punctuation))
-        df['article_title_cleaned'] = df['article_title_cleaned'].str.replace(r"\d+", "", regex=True)
-        df['article_title_cleaned'] = df['article_title_cleaned'].str.replace(r"\s{2,}", " ", regex=True)
-        df['article_title_cleaned'] = df['article_title_cleaned'].str.lower()
-
-        df['article_body_cleaned'] = df['article_body'].str.replace(r"\/", "", regex=True)
-        df['article_body_cleaned'] = df['article_body_cleaned'].str.translate(str.maketrans('', '', string.punctuation))
-        df['article_body_cleaned'] = df['article_body_cleaned'].str.replace(r"\d+", "", regex=True)
-        df['article_body_cleaned'] = df['article_body_cleaned'].str.replace(r"\s{2,}", " ", regex=True)
-        df['article_body_cleaned'] = df['article_body_cleaned'].str.lower()
-        df['article_body_cleaned'] = df['article_body_cleaned'].str.replace('  ', ' ')
+        df['article_title_cleaned'] = self._clean_text(df['article_title'])
+        df['article_body_cleaned'] = self._clean_text(df['article_body']).str.replace('  ', ' ')
         df['article_body_cleaned'] = df['article_body_cleaned'].replace('', 'Empty')
 
         new_df = df[['article_title_cleaned', 'article_body_cleaned', 'article_links']]
@@ -59,17 +60,20 @@ class RagSetup:
                                'article_links': 'urls'}, inplace=True)
 
         self.doc_df = new_df
+        self.data_loaded = True
         return new_df
 
     def set_up_store(self) -> PineconeVectorStore:
         """
         Sets up the Pinecone vector store and returns the document search object.
         """
+        if not self.data_loaded:
+            self.wrangle_data()
+
         docs = DataFrameLoader(
             self.doc_df,
             page_content_column="page_content",
         ).load()
-
 
         pc = pinecone.Pinecone(self.api_key_pinecone)
 
@@ -93,12 +97,16 @@ class RagSetup:
             docsearch = PineconeVectorStore.from_documents(docs, embeddings, index_name=self.index_name)
 
         self.docsearch = docsearch
+        self.store_setup = True
         return docsearch
 
     def setup_qa_chain(self):
         """
         Sets up the QA chain using the LLM and document search.
         """
+        if not self.store_setup:
+            self.set_up_store()
+
         DOCUMENT_PROMPT = """
         Title: {title}
         page_content: {page_content}
@@ -106,7 +114,7 @@ class RagSetup:
         ========="""
 
         QUESTION_PROMPT = """Given the following extracted parts of a help center data and a question, create a final answer with the Help Center link as source ("SOURCE").
-        If you don't know the answer, just say that you don't know. Don't try to make up an answer.
+        If you don't know the answer, just say that you don't know. Don't try to make up an answer. Ensure answer makes sense. Do not go beyond scope of documents retrieved.
         ALWAYS return a "SOURCE" part in your answer. YOU CAN RETURN MULTIPLE 'SOURCES' relevant to the question asked
 
         QUESTION: Tell me about bounty?
@@ -146,19 +154,22 @@ class RagSetup:
             retriever=self.docsearch.as_retriever(),
         )
 
+        self.qa_chain_setup = True
+
     def rag(self, question: str) -> dict:
         """
         Retrieves the answer to a question using the RAG setup.
         """
-        if self.doc_df is None:
+        if not self.data_loaded:
             self.wrangle_data()
         
-        if self.docsearch is None:
+        if not self.store_setup:
             self.set_up_store()
         
-        if self.qa_with_sources is None:
+        if not self.qa_chain_setup:
             self.setup_qa_chain()
-
-        qa_response = self.qa_with_sources.invoke(question)
-        return qa_response
-
+        try:
+            qa_response = self.qa_with_sources.invoke(question)
+            return qa_response
+        except Exception as e:
+            print(e)
