@@ -114,7 +114,7 @@ class RagSetup:
         ========="""
 
         QUESTION_PROMPT = """Given the following extracted parts of a help center data and a question, create a final answer with the Help Center link as source ("SOURCE").
-        If you don't know the answer, just say that you don't know. Don't try to make up an answer. Ensure answer makes sense. Do not go beyond scope of documents retrieved.
+        If you don't know the answer, just say that you don't know. Don't try to make up an answer. Ensure answer makes sense. You are allowed to give an answer based on context. Be careful when doing this
         ALWAYS return a "SOURCE" part in your answer. YOU CAN RETURN MULTIPLE 'SOURCES' relevant to the question asked
 
         QUESTION: Tell me about bounty?
