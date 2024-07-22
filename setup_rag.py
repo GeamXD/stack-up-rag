@@ -62,7 +62,7 @@ class RagSetup:
         new_df["page_content"] = "Title: " + new_df["title"] + "\n" + \
                          "content: " +new_df["content"]
         
-        new_df.drop(columns=['content', 'title'], inplace=True)
+        new_df.drop(columns=['content'], inplace=True)
         
         self.doc_df = new_df
         self.data_loaded = True
@@ -178,3 +178,6 @@ class RagSetup:
             return qa_response
         except Exception as e:
             print(e)
+
+
+cc =
