@@ -22,12 +22,9 @@ This project comprises three main components:
 The deployed version of the app can be accessed [here](https://my-ragdemo-drcrbd9xhqbjiwsq2tfz6l.streamlit.app). The prototype demonstrates the core functionality and provides a proof of concept for future enhancements.
 
 ### Video Demo
-<video width="600" controls>
-  ![Video Demo](extras/app_demo.webm)
-  Your browser does not support the video tag.
-</video>
 
-<!-- [Link to Video Demo](extras/app_demo.webm) -->
+[Watch the StackAssist Demo on YouTube](https://www.youtube.com/watch?v=rVI0-B6gsvs)
+
 
 ### Illustrations and Mock-ups
 
