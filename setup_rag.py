@@ -178,6 +178,3 @@ class RagSetup:
             return qa_response
         except Exception as e:
             print(e)
-
-
-cc =
