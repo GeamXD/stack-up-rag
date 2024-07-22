@@ -16,7 +16,7 @@ class RagSetup:
         self.data_filepath = data_filepath
         self.api_key_pinecone = os.getenv("PINECONE_API_KEY")
         self.api_key_together = os.getenv("TOGETHER_API_KEY")
-        self.index_name = "stackragapp"
+        self.index_name = "stackragappnew"
         self.doc_df = None
         self.docsearch = None
         self.llm = None
@@ -54,11 +54,16 @@ class RagSetup:
         df['article_body_cleaned'] = self._clean_text(df['article_body']).str.replace('  ', ' ')
         df['article_body_cleaned'] = df['article_body_cleaned'].replace('', 'Empty')
 
-        new_df = df[['article_title_cleaned', 'article_body_cleaned', 'article_links']]
+        new_df = df.loc[:, ['article_title_cleaned', 'article_body_cleaned', 'article_links']]
         new_df.rename(columns={'article_title_cleaned': 'title', 
-                               'article_body_cleaned': 'page_content', 
+                               'article_body_cleaned': 'content', 
                                'article_links': 'urls'}, inplace=True)
-
+        
+        new_df["page_content"] = "Title: " + new_df["title"] + "\n" + \
+                         "content: " +new_df["content"]
+        
+        new_df.drop(columns=['content', 'title'], inplace=True)
+        
         self.doc_df = new_df
         self.data_loaded = True
         return new_df
@@ -120,7 +125,7 @@ class RagSetup:
         QUESTION: Tell me about bounty?
         =========
         Title: What is bounty?
-        Description: The StackUp bounty program offers an additional opportunity for Stackies to engage in more advanced learning activities with higher expectations for their output. This program presents a new level of challenge compared to quests, allowing Stackies to tackle more complex challenges in exchange for a larger reward amount.
+        Content : The StackUp bounty program offers an additional opportunity for Stackies to engage in more advanced learning activities with higher expectations for their output. This program presents a new level of challenge compared to quests, allowing Stackies to tackle more complex challenges in exchange for a larger reward amount.
         Help Center link: https://stackuphelpcentre.zendesk.com/hc/en-us/articles/18932072999065-What-is-Bounty
         =========
         NOTE: FOR ABOVE QUESTION, TAKE INFERENCES FROM ALL RELEVANT PAGE CONTENT PROVIDED AND OUTPUT A FINAL ANSWER
