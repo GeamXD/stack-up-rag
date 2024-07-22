@@ -1,6 +1,8 @@
 
 # StackAssist Demo
 
+**LINK TO APP**: [my-ragdemo-drcrbd9xhqbjiwsq2tfz6l.streamlit.app](https://my-ragdemo-drcrbd9xhqbjiwsq2tfz6l.streamlit.app)
+
 ## Introduction
 
 The StackAssist Demo is designed to enhance the StackUp community experience by providing a more efficient way to access information from the StackUp help center. My project uses modern AI techniques such as Retrieval Augmented Generation (RAG) to streamline finding specific information, making it quicker and more user-friendly.
@@ -35,4 +37,4 @@ The deployed version of the app can be accessed [here](https://my-ragdemo-drcrbd
 
 ## Conclusion
 
-I believe the StackAssist  Demo is a promising solution to improve the StackUp community experience. By utilizing advanced AI techniques, it addresses the challenges of finding specific information quickly and efficiently. With planned enhancements, the app has the potential to become an indispensable tool for both new and existing Stackies.
+The StackAssist  Demo offers a promising solution to improve the StackUp community experience. By utilizing advanced AI techniques, it addresses the challenges of finding specific information quickly and efficiently. With planned enhancements, the app has the potential to become an indispensable tool for both new and existing Stackies.
