@@ -44,7 +44,7 @@ def my_app():
     if prompt := st.chat_input("Welcome! How can I assist you?"):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
-            st.write(prompt)
+            st.markdown(prompt)
 
         # Use the rag method to get a response
         response = rag_setup.rag(prompt)
@@ -54,10 +54,10 @@ def my_app():
         sources = response.get("sources", [])
         
         with st.chat_message("assistant"):
-            st.write(answer)
+            st.markdown(answer)
             if sources:
-                st.write("Sources:")
-                st.write(sources)
+                st.markdown("Sources:")
+                st.markdown(sources)
 
         st.session_state.messages.append({"role": "assistant", "content": answer})
 
