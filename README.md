@@ -27,7 +27,7 @@ The deployed version of the app can be accessed [here](https://my-ragdemo-drcrbd
 
 ### Illustrations and Mock-ups
 
-![Illustration](#) (Insert link to any illustrations or mock-ups)
+![Illustration](#) (extras/dataflow.png)
 
 ## Future Plans
 
