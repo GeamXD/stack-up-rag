@@ -5,7 +5,7 @@ from setup_rag import RagSetup
 def my_app():
     
     st.set_page_config(
-        page_title="HelpHub Insights Demo",
+        page_title="StackAssist Demo",
         page_icon="🔍",
         layout="centered",
         initial_sidebar_state="collapsed",
@@ -27,7 +27,7 @@ def my_app():
     )
 
     # Display the title
-    st.markdown('<h1 class="title">HelpHub Insights Demo</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="title">StackAssist Demo</h1>', unsafe_allow_html=True)
     
 
     # Set up chatbot
